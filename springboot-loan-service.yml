@@ -9,19 +9,28 @@ tracing:
   url: http://localhost:4318/v1/traces
 
 # MANAGEMENT CONFIGS
+# management:
+#   tracing:
+#     sampling:
+#       probability: 1.0
+#   endpoints:
+#     health:
+#       show-details: always
+#     web:
+#       exposure:
+#         include: [ "prometheus", "health" ]
+#   health:
+#     circuitbreakers:
+#       enabled: true
+
 management:
   tracing:
     sampling:
       probability: 1.0
   endpoints:
-    health:
-      show-details: always
     web:
       exposure:
         include: [ "prometheus", "health" ]
-  health:
-    circuitbreakers:
-      enabled: true
 
 # CIRCUIT BREAKER CONFIGS
 resilience4j:
