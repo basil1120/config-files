@@ -10,7 +10,7 @@ spring:
     password: 123
     driverClassName: org.h2.Driver
     hikari:
-      pool-name: loan-service-cp
+      pool-name: rate-service-cp
       connection-timeout: 5000
       max-lifetime: 1800000
       idle-timeout: 30000
