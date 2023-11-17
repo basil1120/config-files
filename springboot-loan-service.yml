@@ -1,10 +1,14 @@
+# APPLICATION CONFIGS
 target:
   service:
     url: http://localhost:8989/hello/path2
 
+
+# DISTRIBUTED TRACING CONFIGS
 tracing:
   url: http://localhost:4318/v1/traces
 
+# MANAGEMENT CONFIGS
 management:
   tracing:
     sampling:
@@ -17,8 +21,23 @@ management:
         include: [ "prometheus", "health" ]
   health:
     circuitbreakers:
-      enabled: true        
+      enabled: true
 
+# CIRCUIT BREAKER CONFIGS
+resilience4j:
+  circuitbreaker:
+    instances:
+      loan-service:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED              
+
+# LOGGING CONFIGS
 logging:
   pattern:
     level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
