@@ -10,9 +10,14 @@ management:
     sampling:
       probability: 1.0
   endpoints:
+    health:
+      show-details: always
     web:
       exposure:
-        include: [ "prometheus" ]
+        include: [ "prometheus", "health" ]
+  health:
+    circuitbreakers:
+      enabled: true        
 
 logging:
   pattern:
