@@ -27,10 +27,16 @@ management:
   tracing:
     sampling:
       probability: 1.0
+  endpoint:
+    health:
+      show-details: always
   endpoints:
     web:
       exposure:
         include: [ "prometheus", "health" ]
+  health:
+    circuitbreakers:
+      enabled: true     
 
 # CIRCUIT BREAKER CONFIGS
 resilience4j:
