@@ -1,7 +1,7 @@
 # APPLICATION CONFIGS
 target:
   service:
-    url: http://localhost:8989/hello/path2
+    url: http://localhost:8181/api/v1/rates
 
 
 # DISTRIBUTED TRACING CONFIGS

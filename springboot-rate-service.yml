@@ -1,19 +1,59 @@
-target:
-  service:
-    url: http://localhost:8989/hello/path2
-
+# DISTRIBUTED TRACING CONFIGS
 tracing:
   url: http://localhost:4318/v1/traces
 
+#JDBC CONFIGS
+spring:
+  datasource:
+    url: jdbc:h2:mem:cb-rate-db
+    username: root
+    password: 123
+    driverClassName: org.h2.Driver
+    hikari:
+      pool-name: loan-service-cp
+      connection-timeout: 5000
+      max-lifetime: 1800000
+      idle-timeout: 30000
+      maximum-pool-size: 20
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
+
+#MANAGEMENT CONFIGS
 management:
   tracing:
     sampling:
       probability: 1.0
+  endpoint:
+    health:
+      show-details: always
   endpoints:
     web:
       exposure:
-        include: [ "prometheus" ]
+        include: [ "health", "info", "refresh", "prometheus" ]
+  health:
+    circuitbreakers:
+      enabled: true
 
+# CIRCUIT BREAKER CONFIGS
+resilience4j:
+  circuitbreaker:
+    instances:
+      loan-service:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED              
+
+# LOGGING CONFIGS
 logging:
   pattern:
     level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
