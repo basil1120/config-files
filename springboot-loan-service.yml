@@ -12,8 +12,8 @@ tracing:
 spring:
   datasource:
     url: jdbc:h2:mem:cb-loan-db
-    username: root
-    password: 123
+    # username: root
+    # password: 123
     driverClassName: org.h2.Driver
     hikari:
       pool-name: loan-service-cp

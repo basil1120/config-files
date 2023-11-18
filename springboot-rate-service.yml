@@ -6,8 +6,8 @@ tracing:
 spring:
   datasource:
     url: jdbc:h2:mem:cb-rate-db
-    username: root
-    password: 123
+    # username: root
+    # password: 123
     driverClassName: org.h2.Driver
     hikari:
       pool-name: rate-service-cp
